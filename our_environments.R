@@ -4,4 +4,5 @@ list(
   Diane="x86_64-apple-darwin15.6.0 (64-bit)",
   Dylan="x86_64-w64-mingw32/x64 (64-bit)",
   Gary="x86_64-apple-darwin13.4.0 (64-bit)",
+  Julia="x86_64-apple-darwin15.6.0 (64-bit)"
 )
