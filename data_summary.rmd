@@ -1,0 +1,15 @@
+---
+title: "Summary_data"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+data <- "data.csv"
+data1 <- read_csv(data)
+summary(data1)
+```
