@@ -1,0 +1,62 @@
+---
+title: "MidTermProject 13"
+output: html_document
+---
+##閱聽人對於CNN臉書貼文的反應情緒分析
+```{r}
+library(Rfacebook)
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+```
+
+
+```{r}
+token <- 'EAAWgKYNfQKgBAAiqhDOJ3KNx3WlNZAfV7ybNZAWmC8zBuhYsSnWpdc4rxhEeSOI4b6xfybEjo6VIduwpJZAxiMAvQZBQ2PjGSvLxeiZA2nbw4hgtYZA93ZCoeKqFvyDItnatLwUxBxBBFwf2Te1IURmJOU1iBh5HrtPf8WFjxiHeXhSuQJRMFHdlv8mUvHWL7GuyhnTNw4qrwZDZD'
+```
+
+# 抓出CNN粉專最新500篇貼文 (由9/1至11/14)
+```{r}
+pages <- getPage("cnn",token = token, n = 500, since = "2017/09/01", until = "2017/11/14", reactions = T)
+```
+
+# 整理資料(取出總反應>10000的貼文)
+ 我們將總反應(讚加上所有情緒回覆)超過10000取出，共有25筆資料，逐步去分析在取得較多關注的貼文中，讀者回覆的情緒比例組成。
+```{r}
+pages.2 <- pages %>%
+  select(likes_count,message,created_time,comments_count,shares_count,love_count,haha_count,wow_count,sad_count,angry_count) %>%
+  mutate(reaction_count = likes_count+love_count+haha_count+wow_count+sad_count+angry_count) %>%
+  filter(reaction_count > 10000) %>%
+  arrange(desc(reaction_count))
+
+reactions <- pages.2 %>%
+  select(likes_count,love_count,haha_count,wow_count,sad_count,angry_count)
+
+```
+
+# 畫圖囉
+  將其回覆分為六種，利用加總顯示讀者之回復次數多寡。
+```{r}
+sum <- apply(reactions,2,function(x){sum(x)})
+names(sum) <- c("Like","Love","Haha","Wow","Sad","Angry")
+coul = brewer.pal(3, "Pastel2" )
+barplot(sum, 
+        col = coul,
+        main = "Reactions to the Most Viewed Posts in CNN's Fanspage",
+        xlab = "Reactions",
+        ylab = "Counts",
+        ylim = c(1,700000)) 
+text(0.7,635000,sum[1])  
+text(1.9,150000,sum[2])
+text(3.1,120000,sum[3])
+text(4.3,100000,sum[4])
+text(5.5,120000,sum[5])
+text(6.7,120000,sum[6])
+```
+
+#結論
+
+由圖所顯示，近兩個禮拜受到最多關注之文章，若我們將"Like"視為一種中立的情緒表達，則讀者以表達"Love"者為最多，其次依序是"Sad"跟"Angry"，最少者則為"Wow"；因此，我們可能粗略歸納出，若讀者對於文章內容感受到溫馨或是正向的情緒，接受度與點閱率有較高的可能。(此為較為粗概之推測，為建立在忽略社會風氣走向或是本身新聞媒體之取材等等外部因素影響。)
+
+
+
