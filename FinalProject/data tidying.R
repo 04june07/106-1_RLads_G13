@@ -1,6 +1,8 @@
 library(rjson)
 library(tidyverse)
 library(stringr)
+lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
+Sys.setlocale("LC_TIME", lct)
 
 filename = '' 
 test <- fromJSON(file = paste(filename, '.json', sep = ""))
