@@ -25,6 +25,8 @@ for (i in (1:length(test$articles))){
   } else next
 }
 
+dates <- as.Date(str_sub(dates, 5, -15), "%b%d")
+
 test_df <- cbind.data.frame(dates, titles, contents, push = (push-boo), id) 
 write.csv(test_df,paste(filename,".csv",sep = ""))
 
