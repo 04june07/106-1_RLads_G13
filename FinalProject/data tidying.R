@@ -1,7 +1,8 @@
 library(rjson)
 library(tidyverse)
 library(stringr)
-lct <- Sys.getlocale("LC_TIME"); Sys.setlocale("LC_TIME", "C")
+Sys.setlocale("LC_TIME", "C")
+lct <- Sys.getlocale("LC_TIME")
 Sys.setlocale("LC_TIME", lct)
 
 filename = '' 
