@@ -137,11 +137,6 @@ par(oldpar)
 
 ##########################################################
 # 使用 kml 套件做縱貫資料的集群分析: 
-#      K-Means for Longitudinal Data
-#
-# Longitudinal Data Analysis: 縱貫資料分析
-# For examples: 多家上市公司股票半年來的趨勢
-#               幾千個學生從小一到小六的數學成績趨勢
 ##########################################################
 library(kml)
 
@@ -150,9 +145,6 @@ kml(tmp,2:4,toPlot="traj") # 测试 2 群到 4 群,畫出趨勢線圖形
 kml(tmp,2:4,toPlot="criterion") # 测试 2 群到 4 群,畫出篩選指標圖形
 
 # 根據不同的指標，動態選擇最佳分群數: 4
-# 請見 zip 檔內的 "KML" sub-folder 內各圖檔，
-# 其中 AICc2, BIC 指標是越小越好，其他指標越大越好
-
 # 執行 choice(tmp) 時，可按 d 查看不同的分群數指標圖形
 choice(tmp)
 
@@ -177,7 +169,6 @@ clusters4
 library(dtwclust)
 
 # 使用 dtwclust 套件做階層式集群分析，
-# 從階層式集群分析圖形，可觀察事件跟事件之間的鄰近關係
 
 resultH = tsclust(xdata2,type = "hierarchical",k = 10)
 plot(resultH,xlab="topic",sub="")
